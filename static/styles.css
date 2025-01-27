@@ -1,61 +1,53 @@
-*{
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
-html{
+html {
     font-size: 16px;
+    background-color: #F4EFC1;
 }
 
 @media screen and (max-width: 450px) {
-    html{
-        font-size: 13px;
-        /* background-color: rebeccapurple; */
+    html {
+        font-size: 12px;
     }
-    
 }
 
-body{
+body {
     max-width: 1200px;
     margin: auto;
-
     min-height: 100vh;
-    border: 2px solid red;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 /* Header */
-.header-wrapper{
-    position: relative;
-    left: 0;
+.header-wrapper {
+    position: sticky;
     top: 0;
-    border: 1px solid blue;
-    width: 100%;
-    max-width: 1200px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-block: 20px;
-    z-index: 100;
+    z-index: 10;
+    background-color: #F4EFC1;
 }
 
-.header{
+.header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    font-family: Arial, Helvetica, sans-serif;
-    position: absolute;
-    width: 94vw;
+    width: 100%;
     max-width: 1100px;
+    font-size: 1.25rem;
+    padding: 10px 20px;
+    margin: auto;
     font-size: 1.25rem;
 }
 
-.header .title{
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.header h1 {
+    font-size: 1.25rem;
+    font-weight: 600;
 }
 
-.header .title:hover{
+.header h1:hover {
     cursor: pointer;
 }
 
@@ -64,19 +56,18 @@ body{
     color: black;
     text-decoration: none;
     outline: none;
-    
     transition: 0.3s color ease;
 }
 
 .header .buttons a::after {
     content: '';
     position: absolute;
-    bottom: 0;
+    bottom: -2px;
     left: 0;
     width: 0;
     height: 1px;
     background-color: black;
-    transition: width 0.3s ease, 0.3s ease background-color;
+    transition: width 0.3s ease, background-color 0.3s ease;
 }
 
 .header .buttons a:hover::after,
@@ -90,8 +81,60 @@ body{
     color: grey;
 }
 
-.header .buttons a:last-of-type{
+.header .buttons a:last-of-type {
     margin-left: 20px;
 }
 
+/* Letter */
+.letter {
+    max-width: 500px;
+    margin: auto;
+    min-height: 500px;
+    margin-top: 20px;
+    padding-inline: 20px;
+}
 
+.letter .title-container{
+    display: flex;
+    width: 100%;
+    margin-bottom: 1.5rem;
+}
+
+.letter .title-container .letter-id{
+    margin-right: 20px;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.letter .title-container button{
+    margin-right: 10px;
+    background-color: #F4EFC1;
+    border: none;
+    margin: none;
+    outline: none;
+
+    transition: 0.3s fill ease, transform 0.3s ease;
+}
+
+.letter .title-container button:hover,
+.letter .title-container button:focus{
+    cursor: pointer;
+    fill: grey;
+    transform: translate(3px, -3px);
+}
+
+.letter .title-container button svg{
+    height: 1.25rem;
+    width: auto;
+}
+
+.letter .text p{
+    margin-bottom: 1rem;
+    line-height: 1.75rem;
+
+    letter-spacing: 0.1rem;
+    font-family: Arial, Helvetica, sans-serif;
+
+    /* letter-spacing: 0px;
+    font-family: "Playwrite IN"; */
+}
