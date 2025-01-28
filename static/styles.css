@@ -87,12 +87,14 @@ body {
 }
 
 /* Letter */
-.letter, .write {
+.letter, .write, .landing {
     max-width: 500px;
     margin: auto;
-    min-height: 500px;
+    min-height: 87vh;
     margin-top: 20px;
     padding-inline: 20px;
+
+    /* border: 4px solid red; */
 }
 
 .letter .title-container{
@@ -243,4 +245,79 @@ body {
 .write .button-wrapper button:focus {
     cursor: pointer;
     color: grey; /* Smooth text color transition */
+}
+
+
+/* Landing */
+.landing {
+    display: flex;
+    flex-direction: column;
+}
+
+.landing button {
+    text-align: center;
+    font-size: 1.75rem;
+    letter-spacing: 1.5px;
+    background-color: #F4EFC1;
+    outline: none;
+    padding: 4px;
+    font-weight: 600;
+    max-width: 80%;
+    margin-inline: auto;
+    position: relative; /* For positioning the ::after pseudo-element */
+    transition: color 0.3s ease; /* Smooth color transition */
+    border: none;
+}
+
+.landing button.read-button{
+    margin-top: 30%;
+    margin-bottom: 1rem;
+}
+
+.landing button.write-button{
+    margin-top: auto;
+    margin-bottom: 5vh;
+    color: grey;
+}
+
+
+.landing button::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 3px; /* Adjust the position of the underline */
+    width: 0;
+    height: 1px;
+    background-color: grey;
+    transition: width 0.3s ease; /* Smooth underline animation */
+}
+
+.landing button.write-button::after {
+    background-color: black;
+}
+
+.landing button:hover::after,
+.landing button:focus::after {
+    width: 100%; /* Expands the underline */
+}
+
+.landing button:hover,
+.landing button:focus {
+    cursor: pointer;
+    color: grey; /* Smooth text color transition */
+}
+
+.landing button.write-button:hover,
+.landing button.write-button:focus{
+    color: black;
+}
+
+.landing .gif-container{
+    max-width: 100%;
+    height: auto;
+}
+
+.landing .gif-container img{
+    max-width: 100%;
+    height: auto;
 }
