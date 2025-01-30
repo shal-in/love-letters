@@ -87,7 +87,7 @@ body {
 }
 
 /* Letter */
-.letter, .write, .landing {
+.letter, .write, .landing, .coming-soon {
     max-width: 500px;
     margin: auto;
     min-height: 87vh;
@@ -189,15 +189,25 @@ body {
     flex-direction: column;
 }
 
+.write .input-container{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
 .write input, .write textarea{
     background-color: #F4EFC1;
     outline: none;
-    border: 1px solid black;
+    border: 3px solid black;
     padding: 10px;
     letter-spacing: 0.1rem;
     font-family: Arial, Helvetica, sans-serif;
     line-height: 1.75rem;
     font-size: 1rem;
+}
+
+.write .to{
+    border-right: none;
 }
 
 .write textarea{
@@ -320,4 +330,20 @@ body {
 .landing .gif-container img{
     max-width: 100%;
     height: auto;
+}
+
+/* Coming soon */
+.coming-soon {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.coming-soon p{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    letter-spacing: 0.05rem;
 }
