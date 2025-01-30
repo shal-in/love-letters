@@ -17,6 +17,14 @@ def catch_all(path):
     return redirect("/coming-soon")
 
 
+# API
+# Random letter (maybe something like /random)
+
+# Write
+
+
+
+
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 8080))
     app.run(debug=True, host='0.0.0.0', port=port)
