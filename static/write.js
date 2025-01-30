@@ -1,32 +1,42 @@
-const toInputEl = document.querySelector(".write input");
+const toInputEl = document.querySelector("input.to");
+const fromInputEl = document.querySelector("input.from");
+const textInputEl = document.querySelector("textarea");
+const sendBtnEl = document.querySelector("button.send");
 
-const prefix = "To: ";
+sendBtnEl.addEventListener("click", () => {
+    if (!textInputEl.value) {
+        alert("Write a love letter...");
 
-// Set initial value and ensure "To" is the first thing visible
-toInputEl.value = prefix;
-
-toInputEl.addEventListener("input", (e) => {
-    const inputtedChar = e.data;
-
-    // If a character is typed
-    if (inputtedChar) {
-        // If the input field is empty or just "To", add the typed character
-        if (toInputEl.value === "" || toInputEl.value === prefix) {
-            toInputEl.value = prefix + inputtedChar;
-        }
+        return
     }
-});
 
-toInputEl.addEventListener("keydown", (e) => {
-    // Prevent deletion of "To"
-    if ((e.key === "Backspace" || e.key === "Delete") && toInputEl.selectionStart <= prefix.length) {
-        e.preventDefault(); // Stop the deletion
+    let data = {
+        "to": toInputEl.value,
+        "from": fromInputEl.value,
+        "text": textInputEl.value
     }
-});
 
-toInputEl.addEventListener("blur", () => {
-    // When the input loses focus, if it's empty, set it back to "To"
-    if (toInputEl.value === "") {
-        toInputEl.value = prefix;
-    }
-});
+    console.log(data);
+
+    let url = "/api/write"
+    fetch(url, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log("Success:", data);
+
+        // REDIRECT TO ESSAY PAGE
+    })
+    .catch(error => {
+        console.error("Error:", error);
+    });
+
+    toInputEl.value = ""
+    fromInputEl.value = ""
+    textInputEl.value = ""
+})
