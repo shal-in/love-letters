@@ -20,9 +20,9 @@
         </div>
     </div>
 
-    <div class="letter">
+    <div class="letter-container">
         <div class="title-container">
-            <h2 class="letter-id">#1234</h2>
+            <h2 class="letter-id">#{{ letter_id }}</h2>
             <button class="copy">
                 <svg width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" clip-rule="evenodd" d="M16 6H22V22H6V16H0V0H16V6ZM21 7H7V21H21V7ZM15 6V1H1V15H6V6H15Z"/>
@@ -39,8 +39,10 @@
             </button>
         </div>
 
-        <div class="text">
-            <p class="to">To: <span class="name">Katie</span></p>
+        {{ letter }}  <!-- rendered by flask, the bit below is just an example. that will be removed -->
+
+        <div class="letter" id="letter-1234">
+            <p>To <span class="to">Katie</span>, from <span class="from">John</span></p>
             
             <p>I can’t help but smile every time I think of you. You’ve brought so much light into my life that I often wonder how I got so lucky. Your presence makes the simplest moments feel extraordinary, and being with you has shown me a love I didn’t know was possible.</p>
             <p>I adore everything about you—the way you laugh, the way you listen, the way you make even the hardest days feel manageable. You have a warmth that draws me in, a kindness that inspires me, and a strength that amazes me. With you, I feel safe, seen, and understood in a way I’ve never felt before.</p>

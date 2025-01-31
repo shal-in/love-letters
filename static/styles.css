@@ -87,7 +87,7 @@ body {
 }
 
 /* Letter */
-.letter, .write, .landing, .coming-soon {
+.letter-container, .write, .landing, .coming-soon {
     max-width: 500px;
     margin: auto;
     min-height: 87vh;
@@ -97,19 +97,19 @@ body {
     /* border: 4px solid red; */
 }
 
-.letter .title-container{
+.letter-container .title-container{
     display: flex;
     width: 100%;
     margin-bottom: 1.5rem;
 }
 
-.letter .title-container .letter-id{
+.letter-container .title-container .letter-id{
     margin-right: 20px;
     font-size: 1.5rem;
     font-weight: 600;
 }
 
-.letter .title-container button{
+.letter-container .title-container button{
     margin-right: 10px;
     background-color: #F4EFC1;
     border: none;
@@ -119,19 +119,19 @@ body {
     transition: 0.3s fill ease, transform 0.3s ease;
 }
 
-.letter .title-container button:hover,
-.letter .title-container button:focus{
+.letter-container .title-container button:hover,
+.letter-container .title-container button:focus{
     cursor: pointer;
     fill: grey;
     transform: translate(3px, -3px);
 }
 
-.letter .title-container button svg{
+.letter-container .title-container button svg{
     height: 1.25rem;
     width: auto;
 }
 
-.letter .title-container .font-select{
+.letter-container .title-container .font-select{
     margin-left: auto;
     display: flex;
     justify-content: center;
@@ -139,11 +139,11 @@ body {
     user-select: none;
 }
 
-.letter .title-container .font-select:hover{
+.letter-container .title-container .font-select:hover{
     cursor: pointer;
 }
 
-.letter .title-container .font-select .cursive{
+.letter-container .title-container .font-select .cursive{
     letter-spacing: 0px;
     font-family: "Playwrite IN";
     padding-right: 0.5rem;
@@ -151,7 +151,7 @@ body {
     border-right: 1px solid rgba(0, 0, 0, 0.3);
 }
 
-.letter .title-container .font-select .normal{
+.letter-container .title-container .font-select .normal{
     padding-left: 0.5rem;
     font-size: 1.25rem;
     letter-spacing: 0.1rem;
@@ -159,25 +159,25 @@ body {
     transition: 0.3s ease opacity;
 }
 
-.letter.cursive .title-container .font-select .normal{
+.letter-container.cursive .title-container .font-select .normal{
     opacity: 0.3;
 }
 
-.letter:not(.cursive) .title-container .font-select .cursive{
+.letter-container:not(.cursive) .title-container .font-select .cursive{
     opacity: 0.3;
 }
 
-.letter .text p{
+.letter-container .letter p{
     margin-bottom: 1rem;
     line-height: 1.75rem;
 }
 
-.letter.cursive .text{
+.letter-container.cursive .letter{
     letter-spacing: 0px;
     font-family: "Playwrite IN";
 }
 
-.letter:not(.cursive) .text{
+.letter-container:not(.cursive) .letter{
     letter-spacing: 0.1rem;
     font-family: Arial, Helvetica, sans-serif;
 }
