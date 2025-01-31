@@ -17,19 +17,18 @@ def write():
 
 @app.route("/read")
 def read():
-    # GET RANDOM LETTER ID, redirect to letter id
+    # GET RANDOM LETTER ID from db, redirect to letter id
 
     letter_id = 1234
     return redirect("/1234")
 
 @app.route("/<letter_id>")
 def letter(letter_id):
-    # Check if letter_id in db (if not but letter is still a number, redirect to / or /read)
+    # Check if letter_id in db (if not but letter is still a number, redirect to /read, else redirect to /)
     # get letter from db (HTML thing)
     # Return html (line below)
     # return render_template("letter.html", letter=letter, letter_id=1234)
 
-    print (letter_id)
     return (redirect("/"))
     
 
@@ -37,14 +36,13 @@ def letter(letter_id):
 def coming_soon():
     return render_template("coming-soon.html")
 
-# Catch-all route to redirect everything else to /=
+# Catch-all route to redirect everything else to /
 @app.route("/<path:path>")
 def catch_all(path):
     return redirect("/")
 
 
-# API
-# Write
+# API write
 # Data received looks like:
 # {"to": "example TO", "from": "example FROM", "text": "example TEXT"}
 @app.route("/api/write", methods=["POST"])
@@ -62,7 +60,7 @@ def write_letter():
     # Look at what the format of the letter is in letter.html (looking for a div with class="letter"))
 
     # store the html string AND the raw data in db
-    
+
     # return the letter_id (will redirect from frontend)
     
     return jsonify({"message": "Received!", "data": data})
