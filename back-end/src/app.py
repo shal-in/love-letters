@@ -1,19 +1,31 @@
-from flask import Flask, render_template, redirect, request, jsonify
+import msgspec
 import json
 import os
 
-app = Flask(__name__)
+from flask import Flask, render_template, redirect, request, jsonify
+from firebase_admin import initialize_app
+
+from letter import Letter, store_letter
+
+
+initialize_app()
+
+base_dir = os.path.abspath(os.path.dirname(__file__))
+
+template_dir = os.path.join(base_dir, "../../templates")
+
+app = Flask(__name__, template_folder=template_dir)
+
 
 @app.route("/")
 def index():
     return redirect("/coming-soon")
 
-    # return render_template("index.html")
-
 
 @app.route("/write")
 def write():
     return render_template("write.html")
+
 
 @app.route("/read")
 def read():
@@ -21,6 +33,7 @@ def read():
 
     letter_id = 1234
     return redirect("/1234")
+
 
 @app.route("/<letter_id>")
 def letter(letter_id):
@@ -30,41 +43,33 @@ def letter(letter_id):
     # return render_template("letter.html", letter=letter, letter_id=1234)
 
     return (redirect("/"))
-    
+
 
 @app.route("/coming-soon")
 def coming_soon():
     return render_template("coming-soon.html")
 
-# Catch-all route to redirect everything else to /
-@app.route("/<path:path>")
-def catch_all(path):
-    return redirect("/")
 
-
-# API write
-# Data received looks like:
-# {"to": "example TO", "from": "example FROM", "text": "example TEXT"}
 @app.route("/api/write", methods=["POST"])
-def write_letter():
-    raw_data = request.data.decode('utf-8')
+def create_letter():
+    raw_data = request.data
     
     try:
-        data = json.loads(raw_data)
+        letter_data = msgspec.json.decode(raw_data, type=Letter)
     except json.JSONDecodeError:
         return jsonify({"error": "Invalid JSON"}), 400
-    
-    # get next available letter_id
 
-    # convert everything to the html string (write the function for this, example in scrap.ipynb.
-    # Look at what the format of the letter is in letter.html (looking for a div with class="letter"))
+    new_id, created_at = store_letter(raw_data, letter_data, request.remote_addr)
 
-    # store the html string AND the raw data in db
+    return dict(
+        id=new_id,
+        created_at=created_at
+    )
 
-    # return the letter_id (will redirect from frontend)
-    
-    return jsonify({"message": "Received!", "data": data})
-
+# # Catch-all route to redirect everything else to /coming-soon
+# @app.route("/<path:path>")
+# def catch_all(path):
+#     return redirect("/coming-soon")
 
 
 if __name__ == '__main__':
