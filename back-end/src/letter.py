@@ -1,10 +1,10 @@
+import random
 import typing as t
 import msgspec
 import datetime
 
-from google.cloud.firestore import Query
+from google.cloud.firestore import Query, Client as FirestoreClient, DocumentSnapshot, DocumentReference
 from firebase_admin import firestore
-from google.cloud.firestore_v1.document import DocumentReference
 
 
 class Letter(msgspec.Struct, kw_only=True):
@@ -33,17 +33,19 @@ def get_html(letter: Letter):
     return "\n".join(p_tags)
 
 
+def _get_latest_letter(fs_client: FirestoreClient) -> DocumentSnapshot:
+    query = fs_client.collection("letters").order_by("__name__", direction=Query.DESCENDING).limit(1)
+    return next(iter(query.stream()))
+
+
 def store_letter(raw_data: bytes, letter: Letter, ip: str) -> tuple[int, datetime.datetime]:
     html = get_html(letter)
 
     fs_client = firestore.client()
+    latest_letter = _get_latest_letter(fs_client)
 
-    query = fs_client.collection("letters").order_by("__name__", direction=Query.DESCENDING).limit(1)
-    letter = next(iter(query.stream()))
-
-
-    new_id = str(int(letter.id) + 1)
-    now = datetime.datetime.now()
+    new_id = str(int(latest_letter.id) + 1)
+    now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     new_letter_doc: DocumentReference = fs_client.collection("letters").document(new_id)
 
@@ -57,3 +59,23 @@ def store_letter(raw_data: bytes, letter: Letter, ip: str) -> tuple[int, datetim
     )
 
     return new_id, now
+
+
+def get_random_letter_id() -> str:
+    fs_client = firestore.client()
+
+    latest_letter = _get_latest_letter(fs_client)
+    latest_id = int(latest_letter.id)
+    random_id = random.randrange(1, latest_id)
+
+    return str(random_id)
+
+
+def get_letter_by_id(id: str) -> DocumentSnapshot:
+    fs_client = firestore.client()
+    letter: DocumentSnapshot = fs_client.collection("letters").document(id).get()
+
+    if not letter.exists:
+        raise FileNotFoundError
+
+    return letter

@@ -5,7 +5,7 @@ import os
 from flask import Flask, render_template, redirect, request, jsonify
 from firebase_admin import initialize_app
 
-from letter import Letter, store_letter
+from letter import Letter, store_letter, get_random_letter_id, get_letter_by_id
 
 
 initialize_app()
@@ -29,20 +29,18 @@ def write():
 
 @app.route("/read")
 def read():
-    # GET RANDOM LETTER ID from db, redirect to letter id
-
-    letter_id = 1234
-    return redirect("/1234")
+    random_letter_id = get_random_letter_id()
+    return redirect(f"/{random_letter_id}")
 
 
 @app.route("/<letter_id>")
-def letter(letter_id):
+def get(letter_id: str):
     # Check if letter_id in db (if not but letter is still a number, redirect to /read, else redirect to /)
     # get letter from db (HTML thing)
     # Return html (line below)
     # return render_template("letter.html", letter=letter, letter_id=1234)
-
-    return (redirect("/"))
+    letter = get_letter_by_id(letter_id)
+    return redirect("/") # TODO: finish this
 
 
 @app.route("/coming-soon")
