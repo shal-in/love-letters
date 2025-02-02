@@ -3,7 +3,12 @@ import typing as t
 import msgspec
 import datetime
 
-from google.cloud.firestore import Query, Client as FirestoreClient, DocumentSnapshot, DocumentReference
+from google.cloud.firestore import (
+    Query,
+    Client as FirestoreClient,
+    DocumentSnapshot,
+    DocumentReference,
+)
 from firebase_admin import firestore
 
 
@@ -21,6 +26,10 @@ class FsLetter(msgspec.Struct, kw_only=True):
     raw: dict[str, t.Any]
 
 
+class LetterNotfound(Exception):
+    pass
+
+
 def get_html(letter: Letter):
     to_ = letter.to if letter.to else "Anonymous"
     from_ = letter.from_ if letter.from_ else "Anonymous"
@@ -29,16 +38,24 @@ def get_html(letter: Letter):
     ]
 
     stripped_text = letter.text.strip()
-    p_tags.extend([f"<p>{p.strip()}</p>" for p in stripped_text.split("\n") if p.strip()])
+    p_tags.extend(
+        [f"<p>{p.strip()}</p>" for p in stripped_text.split("\n") if p.strip()]
+    )
     return "\n".join(p_tags)
 
 
 def _get_latest_letter(fs_client: FirestoreClient) -> DocumentSnapshot:
-    query = fs_client.collection("letters").order_by("__name__", direction=Query.DESCENDING).limit(1)
+    query = (
+        fs_client.collection("letters")
+        .order_by("__name__", direction=Query.DESCENDING)
+        .limit(1)
+    )
     return next(iter(query.stream()))
 
 
-def store_letter(raw_data: bytes, letter: Letter, ip: str) -> tuple[int, datetime.datetime]:
+def store_letter(
+    raw_data: bytes, letter: Letter, ip: str
+) -> tuple[int, datetime.datetime]:
     html = get_html(letter)
 
     fs_client = firestore.client()
@@ -76,6 +93,6 @@ def get_letter_by_id(id: str) -> DocumentSnapshot:
     letter: DocumentSnapshot = fs_client.collection("letters").document(id).get()
 
     if not letter.exists:
-        raise FileNotFoundError
+        raise LetterNotfound
 
     return letter

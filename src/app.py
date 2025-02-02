@@ -36,7 +36,7 @@ def get(letter_id: str):
     # Return html (line below)
     # return render_template("letter.html", letter=letter, letter_id=1234)
     letter = get_letter_by_id(letter_id)
-    return redirect("/") # TODO: finish this
+    return redirect("/")  # TODO: finish this
 
 
 @app.route("/coming-soon")
@@ -47,7 +47,7 @@ def coming_soon():
 @app.route("/api/write", methods=["POST"])
 def create_letter():
     raw_data = request.data
-    
+
     try:
         letter_data = msgspec.json.decode(raw_data, type=Letter)
     except json.JSONDecodeError:
@@ -55,17 +55,19 @@ def create_letter():
 
     new_id, created_at = store_letter(raw_data, letter_data, request.remote_addr)
 
-    return dict(
-        id=new_id,
-        created_at=created_at
-    )
-
-# # Catch-all route to redirect everything else to /coming-soon
-# @app.route("/<path:path>")
-# def catch_all(path):
-#     return redirect("/coming-soon")
+    return dict(id=new_id, created_at=created_at)
 
 
-if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 8080))
-    app.run(debug=True, host='0.0.0.0', port=port)
+@app.route("/api/ping-image-share")
+def ping_image_share() -> None:
+    pass
+
+
+@app.route("/api/ping-text-share")
+def ping_text_share() -> None:
+    pass
+
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 8080))
+    app.run(debug=True, host="0.0.0.0", port=port)
