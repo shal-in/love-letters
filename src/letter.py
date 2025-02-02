@@ -3,13 +3,13 @@ import typing as t
 import msgspec
 import datetime
 
-from google.cloud.firestore import (
+from google.cloud.firestore import (  # type: ignore[import-untyped]
     Query,
     Client as FirestoreClient,
     DocumentSnapshot,
     DocumentReference,
 )
-from firebase_admin import firestore
+from firebase_admin import firestore  # type: ignore[import-untyped]
 
 
 class Letter(msgspec.Struct, kw_only=True):
@@ -53,9 +53,7 @@ def _get_latest_letter(fs_client: FirestoreClient) -> DocumentSnapshot:
     return next(iter(query.stream()))
 
 
-def store_letter(
-    raw_data: bytes, letter: Letter, ip: str
-) -> tuple[int, datetime.datetime]:
+def store_letter(raw_data: bytes, letter: Letter, ip: str | None) -> tuple[str, str]:
     html = get_html(letter)
 
     fs_client = firestore.client()
@@ -71,7 +69,7 @@ def store_letter(
             created_at=now,
             raw=raw_data,
             html=html,
-            ip=ip,
+            ip=ip if ip else "",
         )
     )
 

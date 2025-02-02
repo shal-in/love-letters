@@ -1,11 +1,12 @@
+import typing as t
 import msgspec
 import json
 import os
 
-from flask import Flask, render_template, redirect, request, jsonify
-from firebase_admin import initialize_app
+from flask import Flask, render_template, redirect, request, jsonify, Response
+from firebase_admin import initialize_app  # type: ignore[import-untyped]
 
-from letter import Letter, store_letter, get_random_letter_id, get_letter_by_id
+from src.letter import Letter, store_letter, get_random_letter_id, get_letter_by_id
 
 
 initialize_app()
@@ -45,7 +46,7 @@ def coming_soon():
 
 
 @app.route("/api/write", methods=["POST"])
-def create_letter():
+def create_letter() -> tuple[Response, int]:
     raw_data = request.data
 
     try:
@@ -55,17 +56,17 @@ def create_letter():
 
     new_id, created_at = store_letter(raw_data, letter_data, request.remote_addr)
 
-    return dict(id=new_id, created_at=created_at)
+    return jsonify(dict(id=new_id, created_at=created_at)), 201
 
 
-@app.route("/api/ping-image-share")
-def ping_image_share() -> None:
-    pass
+# @app.route("/api/ping-image-share")
+# def ping_image_share() -> None:
+#     pass
 
 
-@app.route("/api/ping-text-share")
-def ping_text_share() -> None:
-    pass
+# @app.route("/api/ping-text-share")
+# def ping_text_share() -> None:
+#     pass
 
 
 if __name__ == "__main__":
