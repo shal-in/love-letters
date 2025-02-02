@@ -22,7 +22,7 @@
 
     <div class="letter-container">
         <div class="title-container">
-            <h2 class="letter-id">#{{ letter_id }}</h2>
+            <h2 class="letter-id">#{{ letter_id | safe }}</h2>
             <button class="copy">
                 <svg width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" clip-rule="evenodd" d="M16 6H22V22H6V16H0V0H16V6ZM21 7H7V21H21V7ZM15 6V1H1V15H6V6H15Z"/>
@@ -39,7 +39,7 @@
             </button>
         </div>
 
-        {{ letter }}  <!-- rendered by flask, the bit below is just an example. that will be removed -->
+        {{ letter | safe }}  <!-- rendered by flask, the bit below is just an example. that will be removed -->
 
         <div class="letter" id="letter-1234">
             <p>To <span class="to">Katie</span>, from <span class="from">John</span></p>
