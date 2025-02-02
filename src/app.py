@@ -57,7 +57,7 @@ def create_letter() -> tuple[Response, int]:
     try:
         letter_data = msgspec.json.decode(raw_data, type=Letter)
     except json.JSONDecodeError:
-        return jsonify({"error": "Invalid JSON"}), 400
+        raise errors.InvalidJson
 
     new_id, created_at = store_letter(raw_data, letter_data, request.remote_addr)
 
