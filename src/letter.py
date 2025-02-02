@@ -26,22 +26,24 @@ class FsLetter(msgspec.Struct, kw_only=True):
     raw: dict[str, t.Any]
 
 
-class LetterNotfound(Exception):
-    pass
+def get_html(letter: Letter, letter_id: str):
+    html_elements = [f'<div class="letter" id="{letter_id}">']
 
-
-def get_html(letter: Letter):
     to_ = letter.to if letter.to else "Anonymous"
     from_ = letter.from_ if letter.from_ else "Anonymous"
     p_tags = [
-        f'<p>To <span class="to">{to_}</span>, from <span class="from">{from_}</span></p>'
+        f'<p><span class="to">To {to_}, </span> <span class="from">from {from_}</span></p>'
     ]
 
     stripped_text = letter.text.strip()
     p_tags.extend(
         [f"<p>{p.strip()}</p>" for p in stripped_text.split("\n") if p.strip()]
     )
-    return "\n".join(p_tags)
+
+    html_elements.extend(p_tags)
+    html_elements.append("</div>")
+
+    return "\n".join(html_elements)
 
 
 def _get_latest_letter(fs_client: FirestoreClient) -> DocumentSnapshot:
@@ -54,12 +56,12 @@ def _get_latest_letter(fs_client: FirestoreClient) -> DocumentSnapshot:
 
 
 def store_letter(raw_data: bytes, letter: Letter, ip: str | None) -> tuple[str, str]:
-    html = get_html(letter)
-
     fs_client = firestore.client()
     latest_letter = _get_latest_letter(fs_client)
-
     new_id = str(int(latest_letter.id) + 1)
+
+    html = get_html(letter, new_id)
+
     now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     new_letter_doc: DocumentReference = fs_client.collection("letters").document(new_id)
@@ -86,11 +88,11 @@ def get_random_letter_id() -> str:
     return str(random_id)
 
 
-def get_letter_by_id(id: str) -> DocumentSnapshot:
+def get_letter_by_id(id: str) -> DocumentSnapshot | None:
     fs_client = firestore.client()
     letter: DocumentSnapshot = fs_client.collection("letters").document(id).get()
 
     if not letter.exists:
-        raise LetterNotfound
+        return None
 
     return letter

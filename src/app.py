@@ -6,6 +6,7 @@ import os
 from flask import Flask, render_template, redirect, request, jsonify, Response
 from firebase_admin import initialize_app  # type: ignore[import-untyped]
 
+import src.errors as errors
 from src.letter import Letter, store_letter, get_random_letter_id, get_letter_by_id
 
 
@@ -37,6 +38,10 @@ def get(letter_id: str):
     # Return html (line below)
     # return render_template("letter.html", letter=letter, letter_id=1234)
     letter = get_letter_by_id(letter_id)
+
+    if letter is None:
+        raise errors.LetterNotfound
+
     return redirect("/")  # TODO: finish this
 
 

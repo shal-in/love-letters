@@ -1,0 +1,2 @@
+class LetterNotfound(Exception):
+    pass
