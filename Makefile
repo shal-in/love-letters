@@ -9,3 +9,7 @@ mypy:
 .PHONY: test
 test:
 	python -m pytest
+
+.PHONY: local
+local:
+	python src/app.py
