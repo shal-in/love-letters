@@ -33,12 +33,14 @@ jobs:
     
   ci-make-mypy:
     needs: setup
+    runs-on: ubuntu-latest
     steps:
       - name: Run `make format`
         run: make mypy
 
   ci-unit-tests:
     needs: setup
+    runs-on: ubuntu-latest
     steps:
       - name: Run `make format`
         run: make test
