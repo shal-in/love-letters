@@ -2,7 +2,7 @@ name: Build Pipeline
 run-name: Running build checks
 on: [push]
 jobs:
-  setup:
+  ci-setup:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository content
@@ -28,6 +28,15 @@ jobs:
     needs: setup
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository content
+        uses: actions/checkout@v4
+
+      - name: Restore Python dependencies cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+
       - name: Run `make format`
         run: make format
     
@@ -35,12 +44,30 @@ jobs:
     needs: setup
     runs-on: ubuntu-latest
     steps:
-      - name: Run `make format`
+      - name: Checkout repository content
+        uses: actions/checkout@v4
+
+      - name: Restore Python dependencies cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+
+      - name: Run `make mypy`
         run: make mypy
 
   ci-unit-tests:
     needs: setup
     runs-on: ubuntu-latest
     steps:
-      - name: Run `make format`
+      - name: Checkout repository content
+        uses: actions/checkout@v4
+
+      - name: Restore Python dependencies cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+    
+      - name: Run `make test`
         run: make test
