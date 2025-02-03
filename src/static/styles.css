@@ -86,11 +86,35 @@ body {
     margin-left: 1rem;
 }
 
+/* Footer */
+.footer-wrapper{
+    width: 100%;
+    min-height: 30px;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-block: 10px;
+}
+
+.footer-wrapper p:first-of-type{
+    font-weight: 600;
+    font-size: 1.15rem;
+    letter-spacing: 0.0125rem;
+    margin-bottom: 0.5rem;
+}
+
+.footer-wrapper p:last-of-type{
+    font-size: 1rem;
+    letter-spacing: 0.01rem;
+}
+
 /* Letter */
 .letter-container, .write, .landing, .coming-soon {
     max-width: 500px;
     margin: auto;
-    min-height: 87vh;
+    min-height: 82vh;
     margin-top: 20px;
     padding-inline: 20px;
 

@@ -24,7 +24,9 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    return redirect("/coming-soon")
+    # return redirect("/coming-soon")
+
+    return render_template("index.html")
 
 
 @app.route("/write")
