@@ -29,7 +29,7 @@ class FsLetter(msgspec.Struct, kw_only=True):
 def _get_latest_letter(fs_client: FirestoreClient) -> DocumentSnapshot:
     query = (
         fs_client.collection("letters")
-        .order_by("__name__", direction=Query.DESCENDING)
+        .order_by("created_at", direction=Query.DESCENDING)
         .limit(1)
     )
     return next(iter(query.stream()))
