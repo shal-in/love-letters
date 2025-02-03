@@ -6,8 +6,15 @@ import os
 from flask import Flask, render_template, redirect, request, jsonify, Response
 from firebase_admin import initialize_app  # type: ignore[import-untyped]
 
-import src.errors as errors
-from src.letter import Letter, store_letter, get_random_letter_id, get_letter_by_id
+import errors as errors
+from letter import (
+    Letter,
+    store_letter,
+    get_random_letter_id,
+    get_letter_by_id,
+    get_letter_data_for_read,
+    letter_exists,
+)
 
 
 initialize_app()
@@ -31,25 +38,20 @@ def read():
     return redirect(f"/{random_letter_id}")
 
 
-@app.route("/<letter_id>")
-def get(letter_id: str):
-    # Check if letter_id in db (if not but letter is still a number, redirect to /read, else redirect to /)
-    # get letter from db (HTML thing)
-    # Return html (line below)
-    # return render_template("letter.html", letter=letter, letter_id=1234)
-    letter = get_letter_by_id(letter_id)
-
-    if letter is None:
-        raise errors.LetterNotfound
-
-    return redirect("/")  # TODO: finish this
-
-
 @app.route("/coming-soon")
 def coming_soon():
     return render_template("coming-soon.html")
 
 
+@app.route("/<letter_id>")
+def letter(letter_id: str):
+    if not letter_exists(letter_id):
+        return redirect("/")
+
+    return render_template("letter.html")
+
+
+# API
 @app.route("/api/write", methods=["POST"])
 def create_letter() -> tuple[Response, int]:
     raw_data = request.data
@@ -62,6 +64,18 @@ def create_letter() -> tuple[Response, int]:
     new_id, created_at = store_letter(raw_data, letter_data, request.remote_addr)
 
     return jsonify(dict(id=new_id, created_at=created_at)), 201
+
+
+@app.route("/api/read", methods=["GET"])
+def get_letter() -> tuple[Response, int]:
+    letter_id = request.args.get("letter_id")
+
+    letter_data = get_letter_data_for_read(letter_id)
+
+    if not letter_data:
+        return jsonify({"error": "Letter not found"}), 404
+
+    return jsonify(letter_data), 200
 
 
 # @app.route("/api/ping-image-share")

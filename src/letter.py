@@ -2,6 +2,7 @@ import random
 import typing as t
 import msgspec
 import datetime
+import json
 
 from google.cloud.firestore import (  # type: ignore[import-untyped]
     Query,
@@ -22,28 +23,7 @@ class FsLetter(msgspec.Struct, kw_only=True):
     id: int
     ip: str
     created_at: datetime.datetime
-    html: str
     raw: dict[str, t.Any]
-
-
-def get_html(letter: Letter, letter_id: str):
-    html_elements = [f'<div class="letter" id="{letter_id}">']
-
-    to_ = letter.to if letter.to else "Anonymous"
-    from_ = letter.from_ if letter.from_ else "Anonymous"
-    p_tags = [
-        f'<p><span class="to">To {to_}, </span> <span class="from">from {from_}</span></p>'
-    ]
-
-    stripped_text = letter.text.strip()
-    p_tags.extend(
-        [f"<p>{p.strip()}</p>" for p in stripped_text.split("\n") if p.strip()]
-    )
-
-    html_elements.extend(p_tags)
-    html_elements.append("</div>")
-
-    return "\n".join(html_elements)
 
 
 def _get_latest_letter(fs_client: FirestoreClient) -> DocumentSnapshot:
@@ -60,8 +40,6 @@ def store_letter(raw_data: bytes, letter: Letter, ip: str | None) -> tuple[str, 
     latest_letter = _get_latest_letter(fs_client)
     new_id = str(int(latest_letter.id) + 1)
 
-    html = get_html(letter, new_id)
-
     now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     new_letter_doc: DocumentReference = fs_client.collection("letters").document(new_id)
@@ -69,8 +47,8 @@ def store_letter(raw_data: bytes, letter: Letter, ip: str | None) -> tuple[str, 
     new_letter_doc.set(
         dict(
             created_at=now,
-            raw=raw_data,
-            html=html,
+            raw=json.loads(raw_data.decode("utf-8")),
+            id=new_id,
             ip=ip if ip else "",
         )
     )
@@ -96,3 +74,23 @@ def get_letter_by_id(id: str) -> DocumentSnapshot | None:
         return None
 
     return letter
+
+
+def letter_exists(id: str) -> bool:
+    fs_client = firestore.client()
+    letter: DocumentSnapshot = fs_client.collection("letters").document(id).get()
+
+    return letter.exists
+
+
+def get_letter_data_for_read(id: str) -> dict | None:
+    letter = get_letter_by_id(id)
+
+    if not letter:
+        return None
+
+    letter = letter.to_dict()
+
+    letter_data = {"id": id, "raw": letter["raw"]}
+
+    return letter_data
