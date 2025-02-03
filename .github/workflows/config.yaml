@@ -2,19 +2,43 @@ name: Build Pipeline
 run-name: Running build checks
 on: [push]
 jobs:
-  Explore-Github-Actions:
+  setup:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository content
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Setup Python Version
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: 3.11
 
       - name: Install Python dependencies
         run: python -m pip install --upgrade pip requests -r requirements.txt
 
+      - name: Cache Python dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+  ci-make-format:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
       - name: Run `make format`
         run: make format
+    
+  ci-make-mypy:
+    needs: setup
+    steps:
+      - name: Run `make format`
+        run: make mypy
+
+  ci-unit-tests:
+    needs: setup
+    steps:
+      - name: Run `make format`
+        run: make test
