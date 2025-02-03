@@ -1,0 +1,9 @@
+name: Build Pipeline
+run-name: Running build checks
+on: [push]
+jobs:
+  Explore-Github-Actions:
+    runs-on: ubuntu-latest
+    steps: 
+      - run: echo "Hello World!"
+      - run: make format
