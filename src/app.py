@@ -6,12 +6,11 @@ import os
 from flask import Flask, render_template, redirect, request, jsonify, Response
 from firebase_admin import initialize_app  # type: ignore[import-untyped]
 
-import errors as errors
-from letter import (
+import src.errors as errors
+from src.letter import (
     Letter,
     store_letter,
     get_random_letter_id,
-    get_letter_by_id,
     get_letter_data_for_read,
     letter_exists,
 )
@@ -70,7 +69,10 @@ def create_letter() -> tuple[Response, int]:
 
 @app.route("/api/read", methods=["GET"])
 def get_letter() -> tuple[Response, int]:
-    letter_id = request.args.get("letter_id")
+    letter_id = request.args.get("letter_id", None)
+
+    if letter_id is None:
+        raise Exception
 
     letter_data = get_letter_data_for_read(letter_id)
 
