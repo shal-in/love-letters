@@ -13,7 +13,7 @@ gifContainerEl.addEventListener("click", () => {
 
         setTimeout(() => {
             imgEl.src = imgSrc;
-            window.location.href = "/templates/letter.html"
+            window.location.href = "/read"
         }, gifDuration);
     }
 })

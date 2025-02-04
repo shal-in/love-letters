@@ -12,7 +12,9 @@ app.register_blueprint(letters_bp, url_prefix="/letters")
 
 @app.route("/")
 def index():
-    return redirect("/coming-soon")
+    # return redirect("/coming-soon")
+
+    return render_template("index.html")
 
 
 @app.route("/write")
@@ -23,6 +25,14 @@ def write():
 @app.route("/coming-soon")
 def coming_soon():
     return render_template("coming-soon.html")
+
+
+@app.route("/<letter_id>")
+def letter(letter_id: str):
+    if not letter_exists(letter_id):
+        return redirect("/")
+
+    return render_template("letter.html")
 
 
 # @app.route("/api/ping-image-share")
