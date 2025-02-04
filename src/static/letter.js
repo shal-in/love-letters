@@ -5,7 +5,7 @@ if (!letterId) {
 }
 
 // GET REQUEST
-const requestURL = `/api/read?letter_id=${letterId}`
+const requestURL = `/letters/read?letter_id=${letterId}`
 fetch(requestURL)
 .then(response => {
     if (!response.ok) {

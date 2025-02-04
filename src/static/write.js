@@ -18,7 +18,7 @@ sendBtnEl.addEventListener("click", () => {
 
     console.log(data);
 
-    let url = "/api/write"
+    let url = "/letters"
     fetch(url, {
         method: "POST",
         headers: {
