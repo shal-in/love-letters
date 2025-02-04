@@ -2,9 +2,9 @@ import os
 
 from flask import Flask, render_template, redirect
 
-from routers.letters import letters_bp
+from routers.letters import letters_bp  # type: ignore[import-not-found]
 
-from utils import letter_exists
+from utils import letter_exists  # type: ignore[import-not-found]
 
 
 app = Flask(__name__)

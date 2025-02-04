@@ -1,5 +1,5 @@
-from firebase_admin import firestore
-from google.cloud.firestore import DocumentSnapshot
+from firebase_admin import firestore  # type: ignore[import-untyped]
+from google.cloud.firestore import DocumentSnapshot  # type: ignore[import-untyped]
 
 
 def letter_exists(id: str) -> bool:

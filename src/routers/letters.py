@@ -3,10 +3,10 @@ import json
 import random
 
 from flask import redirect, request, jsonify, Response, Blueprint, url_for
-import firebase_admin
+import firebase_admin  # type: ignore[import-untyped]
 from firebase_admin import firestore
 
-import errors as errors
+import errors  # type: ignore[import-not-found]
 
 from google.cloud.firestore import (  # type: ignore[import-untyped]
     DocumentReference,
