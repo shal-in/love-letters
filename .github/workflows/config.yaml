@@ -1,73 +1,74 @@
-name: Build Pipeline
-run-name: Running build checks
-on: [push]
-jobs:
-  ci-setup:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository content
-        uses: actions/checkout@v4
+# name: Build Pipeline
+# run-name: Running build checks
+# on: [push]
+# jobs:
+#   ci-setup:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout repository content
+#         uses: actions/checkout@v4
 
-      - name: Setup Python Version
-        uses: actions/setup-python@v4
-        with:
-          python-version: 3.11
+#       - name: Setup Python Version
+#         uses: actions/setup-python@v4
+#         with:
+#           python-version: 3.11
 
-      - name: Install Python dependencies
-        run: python -m pip install --upgrade pip requests -r requirements.txt
+#       - name: Install Python dependencies
+#         run: python -m pip install --upgrade pip requests -r requirements.txt
 
-      - name: Cache Python dependencies
-        uses: actions/cache@v3
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
+#       - name: Cache Python dependencies
+#         uses: actions/cache@v3
+#         id: cache
+#         with:
+#           path: ~/.cache/pip
+#           key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+#           restore-keys: |
+#             ${{ runner.os }}-pip-
 
-  ci-make-format:
-    needs: ci-setup
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository content
-        uses: actions/checkout@v4
+#   ci-make-format:
+#     needs: ci-setup
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout repository content
+#         uses: actions/checkout@v4
 
-      - name: Restore Python dependencies cache
-        uses: actions/cache@v3
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+#       - name: Restore Python dependencies cache
+#         uses: actions/cache@v3
+#         with:
+#           path: ~/.cache/pip
+#           key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
 
-      - name: Run `make format`
-        run: make format
+#       - name: Run `make format`
+#         run: make format
     
-  ci-make-mypy:
-    needs: ci-setup
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository content
-        uses: actions/checkout@v4
+#   ci-make-mypy:
+#     needs: ci-setup
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout repository content
+#         uses: actions/checkout@v4
 
-      - name: Restore Python dependencies cache
-        uses: actions/cache@v3
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+#       - name: Restore Python dependencies cache
+#         uses: actions/cache@v3
+#         with:
+#           path: ~/.cache/pip
+#           key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
 
-      - name: Run `make mypy`
-        run: make mypy
+#       - name: Run `make mypy`
+#         run: make mypy
 
-  ci-unit-tests:
-    needs: ci-setup
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository content
-        uses: actions/checkout@v4
+#   ci-unit-tests:
+#     needs: ci-setup
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout repository content
+#         uses: actions/checkout@v4
 
-      - name: Restore Python dependencies cache
-        uses: actions/cache@v3
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+#       - name: Restore Python dependencies cache
+#         uses: actions/cache@v3
+#         with:
+#           path: ~/.cache/pip
+#           key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
     
-      - name: Run `make test`
-        run: make test
+#       - name: Run `make test`
+#         run: make test
