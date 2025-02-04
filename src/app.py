@@ -4,6 +4,8 @@ from flask import Flask, render_template, redirect
 
 from routers.letters import letters_bp
 
+from utils import letter_exists
+
 
 app = Flask(__name__)
 
@@ -33,16 +35,6 @@ def letter(letter_id: str):
         return redirect("/")
 
     return render_template("letter.html")
-
-
-# @app.route("/api/ping-image-share")
-# def ping_image_share() -> None:
-#     pass
-
-
-# @app.route("/api/ping-text-share")
-# def ping_text_share() -> None:
-#     pass
 
 
 if __name__ == "__main__":

@@ -9,7 +9,7 @@ import requests
 
 response = requests.request(
     "POST",
-    url="http://127.0.0.1:8080/api/write",
+    url="http://127.0.0.1:8080/letters",
     data=json.dumps(
         {
             "to": "Katie",
@@ -42,7 +42,7 @@ print(response.content)
 
 response = requests.request(
     "GET",
-    url="http://127.0.0.1:8080/api/get/0",
+    url="http://127.0.0.1:8080/letters/get/0",
     headers={"Authorization": "Bearer foo", "Content-type": "application/json"},
 )
 
