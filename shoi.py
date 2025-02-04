@@ -21,6 +21,7 @@ response = requests.request(
 )
 
 print(response.status_code)
+print(response.content)
 
 
 # response = requests.request(
