@@ -5,11 +5,22 @@ if (!letterId) {
     window.location.href = "/"
 }
 
+<<<<<<< HEAD
 
 const copyButtonEl = letterHeader.querySelector(".copy");
 copyButtonEl.addEventListener("click", () => {
     const to = document.querySelector(".letter .recipients .to").textContent;
     copyButtonFunction(letterId, to);
+=======
+// GET REQUEST
+const requestURL = `/letters/read?letter_id=${letterId}`
+fetch(requestURL)
+.then(response => {
+    if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
+    }
+    return response.json();
+>>>>>>> 34ec85700712128cb16192ef3dbd930903fe5216
 })
 
 function copyButtonFunction(letterId, to) {

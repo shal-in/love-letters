@@ -55,11 +55,7 @@ def text_to_html(raw: dict) -> str:
 
 
 def _get_latest_letter(fs_client: FirestoreClient) -> DocumentSnapshot:
-    query = (
-        fs_client.collection("letters")
-        .order_by("created_at", direction=Query.DESCENDING)
-        .limit(1)
-    )
+    query = fs_client.collection("letters").order_by("created_at", direction=Query.DESCENDING).limit(1)
     return next(iter(query.stream()))
 
 
