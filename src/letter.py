@@ -54,15 +54,23 @@ def text_to_html(raw: dict) -> str:
     return html
 
 
-def _get_latest_letter(fs_client: FirestoreClient) -> DocumentSnapshot:
-    query = fs_client.collection("letters").order_by("created_at", direction=Query.DESCENDING).limit(1)
-    return next(iter(query.stream()))
+def _get_latest_letter(fs_client: FirestoreClient) -> DocumentSnapshot | None:
+    query = (
+        fs_client.collection("letters")
+        .order_by("created_at", direction=Query.DESCENDING)
+        .limit(1)
+    )
+
+    return next(iter(query.stream()), None)
 
 
 def store_letter(raw_data: bytes, letter: Letter, ip: str | None) -> tuple[str, str]:
     fs_client = firestore.client()
     latest_letter = _get_latest_letter(fs_client)
-    new_id = str(int(latest_letter.id) + 1)
+    if latest_letter is None:
+        new_id = "1"  # Start from 1 if there are no existing letters
+    else:
+        new_id = str(int(latest_letter.id) + 1)
 
     now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 

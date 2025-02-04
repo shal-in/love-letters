@@ -18,7 +18,7 @@ sendBtnEl.addEventListener("click", () => {
 
     console.log(data);
 
-    let url = "/letters"
+    let url = "/api/write"
     fetch(url, {
         method: "POST",
         headers: {
@@ -28,9 +28,9 @@ sendBtnEl.addEventListener("click", () => {
     })
     .then(response => response.json())
     .then(data => {
-        console.log("Success:", data);
+        // Maybe some kind of fake loading screen?
 
-        // REDIRECT TO ESSAY PAGE
+        window.location.href = `/${data.id}`;
     })
     .catch(error => {
         console.error("Error:", error);
