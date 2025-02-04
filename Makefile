@@ -1,3 +1,5 @@
+export GOOGLE_APPLICATION_CREDENTIALS=credentials.json
+
 .PHONY: format
 format: 
 	python -m ruff format

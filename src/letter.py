@@ -26,6 +26,34 @@ class FsLetter(msgspec.Struct, kw_only=True):
     raw: dict[str, t.Any]
 
 
+def text_to_html(raw: dict) -> str:
+    to: str = raw["to"]
+    from_: str = raw["from"]
+    text: str = raw["text"]
+
+    html = f'<p class="recipients">To <span class="to">'
+    if to:
+        html += f"{to}"
+    else:
+        html += f"Anonymous"
+    html += "</span>"
+
+    if from_:
+        html += f', from <span class="from">{from_}</span>'
+
+    html += f"</p>"
+
+    parags: list = text.split("\n")
+
+    for parag in parags:
+        p = f"<p>{parag}</p>"
+
+        html += "\n"
+        html += p
+
+    return html
+
+
 def _get_latest_letter(fs_client: FirestoreClient) -> DocumentSnapshot:
     query = (
         fs_client.collection("letters")

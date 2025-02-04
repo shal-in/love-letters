@@ -110,6 +110,33 @@ body {
     letter-spacing: 0.01rem;
 }
 
+/* Copy to clipboard */
+#copy-notification {
+    position: fixed;
+    z-index: 1000;
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+#copy-notification.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+
 /* Letter */
 .letter-container, .write, .landing, .coming-soon {
     max-width: 500px;

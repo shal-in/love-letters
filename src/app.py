@@ -9,9 +9,9 @@ from firebase_admin import initialize_app  # type: ignore[import-untyped]
 import errors as errors
 from letter import (
     Letter,
+    text_to_html,
     store_letter,
     get_random_letter_id,
-    get_letter_by_id,
     get_letter_data_for_read,
     letter_exists,
 )
@@ -50,7 +50,10 @@ def letter(letter_id: str):
     if not letter_exists(letter_id):
         return redirect("/")
 
-    return render_template("letter.html")
+    letter_data = get_letter_data_for_read(letter_id)
+    letter_html = text_to_html(letter_data["raw"])
+
+    return render_template("letter.html", letter=letter_html, letter_id=letter_id)
 
 
 # API
@@ -66,18 +69,6 @@ def create_letter() -> tuple[Response, int]:
     new_id, created_at = store_letter(raw_data, letter_data, request.remote_addr)
 
     return jsonify(dict(id=new_id, created_at=created_at)), 201
-
-
-@app.route("/api/read", methods=["GET"])
-def get_letter() -> tuple[Response, int]:
-    letter_id = request.args.get("letter_id")
-
-    letter_data = get_letter_data_for_read(letter_id)
-
-    if not letter_data:
-        return jsonify({"error": "Letter not found"}), 404
-
-    return jsonify(letter_data), 200
 
 
 # @app.route("/api/ping-image-share")
