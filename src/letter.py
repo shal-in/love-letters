@@ -24,15 +24,15 @@ class FsLetter:
     raw: RawData
 
 
-def get_latest_letter(fs_client: FirestoreClient) -> DocumentSnapshot:
-    query = fs_client.collection("letters").order_by("created_at", direction=Query.DESCENDING).limit(1)
+def get_latest_letter(db: FirestoreClient) -> DocumentSnapshot:
+    query = db.collection("letters").order_by("created_at", direction=Query.DESCENDING).limit(1)
     return next(iter(query.stream()))
 
 
 def get_random_letter_id() -> str:
-    fs_client = firestore.client()
+    db = firestore.client()
 
-    latest_letter = get_latest_letter(fs_client)
+    latest_letter = get_latest_letter(db)
 
     latest_id = int(latest_letter.id)
     random_id = random.randrange(1, latest_id)
@@ -41,14 +41,14 @@ def get_random_letter_id() -> str:
 
 
 def letter_exists(id: str) -> bool:
-    fs_client = firestore.client()
-    letter: DocumentSnapshot = fs_client.collection("letters").document(id).get()
+    db = firestore.client()
+    letter: DocumentSnapshot = db.collection("letters").document(id).get()
     return letter.exists
 
 
 def get_letter_data(id: str) -> FsLetter:
-    fs_client = firestore.client()
-    letter: DocumentSnapshot = fs_client.collection("letters").document(id).get()
+    db = firestore.client()
+    letter: DocumentSnapshot = db.collection("letters").document(id).get()
 
     letter = letter.to_dict()
     raw = letter["raw"]
