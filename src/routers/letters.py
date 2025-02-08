@@ -1,17 +1,14 @@
 import datetime
 import json
 
-from flask import request, jsonify, Response, Blueprint
 import firebase_admin  # type: ignore[import-untyped]
 from firebase_admin import firestore
-
-
+from flask import Blueprint, Response, jsonify, request
 from google.cloud.firestore import (  # type: ignore[import-untyped]
     DocumentReference,
 )
 
 from src.letter import get_latest_letter
-
 
 firebase_admin.initialize_app()
 

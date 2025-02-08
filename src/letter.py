@@ -1,13 +1,15 @@
 import random
 import typing as t
+from dataclasses import dataclass
 
-from google.cloud.firestore import (  # type: ignore[import-untyped]
-    Query,
-    DocumentSnapshot,
+from firebase_admin import firestore  # type: ignore[import-untyped]
+from google.cloud.firestore import (
     Client as FirestoreClient,
 )
-from firebase_admin import firestore  # type: ignore[import-untyped]
-from dataclasses import dataclass
+from google.cloud.firestore import (  # type: ignore[import-untyped]
+    DocumentSnapshot,
+    Query,
+)
 
 
 @dataclass(frozen=True, kw_only=True)

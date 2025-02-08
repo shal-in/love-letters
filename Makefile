@@ -2,6 +2,7 @@ export GOOGLE_APPLICATION_CREDENTIALS=credentials.json
 
 .PHONY: format
 format: 
+	python -m ruff check --select I --fix
 	python -m ruff format
 
 .PHONY: mypy
