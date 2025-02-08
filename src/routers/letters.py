@@ -1,24 +1,21 @@
 import datetime
 import json
-import random
 
-from flask import redirect, request, jsonify, Response, Blueprint, url_for
+from flask import request, jsonify, Response, Blueprint
 import firebase_admin  # type: ignore[import-untyped]
 from firebase_admin import firestore
 
-import errors  # type: ignore[import-not-found]
 
 from google.cloud.firestore import (  # type: ignore[import-untyped]
     DocumentReference,
-    Client as FirestoreClient,
-    DocumentSnapshot,
-    Query,
 )
+
+from src.letter import get_latest_letter
 
 
 firebase_admin.initialize_app()
 
-letters_bp = Blueprint("letters", __name__)
+letters_bp = Blueprint("letters", __name__, url_prefix="/letters")
 
 
 @letters_bp.post("/")
@@ -27,7 +24,7 @@ def create_letter() -> tuple[Response, int]:
 
     fs_client = firestore.client()
 
-    latest_letter = _get_latest_letter(fs_client)
+    latest_letter = get_latest_letter(fs_client)
     new_id = str(int(latest_letter.id) + 1)
 
     now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -44,41 +41,6 @@ def create_letter() -> tuple[Response, int]:
     )
 
     return jsonify(dict(id=new_id, created_at=now)), 201
-
-
-@letters_bp.get("/<letter_id>")
-def get(letter_id: str):
-    fs_client = firestore.client()
-    letter: DocumentSnapshot = fs_client.collection("letters").document(letter_id).get()
-
-    if not letter:
-        raise errors.LetterNotfound
-
-    letter = letter.to_dict()
-
-    letter_data = {"id": letter_id, "raw": letter["raw"]}
-
-    return jsonify(letter_data), 200
-
-
-@letters_bp.get("/random")
-def random_letter():
-    fs_client = firestore.client()
-    latest_letter = _get_latest_letter(fs_client)
-    latest_id = int(latest_letter.id)
-    random_letter_id = random.randrange(1, latest_id)
-
-    return redirect(url_for("letters.get", letter_id=random_letter_id))
-
-
-def _get_latest_letter(fs_client: FirestoreClient) -> DocumentSnapshot:
-    query = fs_client.collection("letters").order_by("created_at", direction=Query.DESCENDING).limit(1)
-    return next(iter(query.stream()))
-
-
-# @app.route("/api/ping-image-share")
-# def ping_image_share() -> None:
-#     pass
 
 
 # @app.route("/api/ping-text-share")

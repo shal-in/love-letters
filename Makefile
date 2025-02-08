@@ -14,4 +14,4 @@ test:
 
 .PHONY: local
 local:
-	python src/app.py
+	python -m src.main
