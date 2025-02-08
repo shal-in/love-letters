@@ -6,11 +6,16 @@ from flask import Flask, redirect, render_template
 from src.letter import get_letter_data, get_random_letter_id, letter_exists, text_to_html
 from src.routers.letters import letters_bp
 
-firebase_admin.initialize_app()
-
-
 app = Flask(__name__)
 app.register_blueprint(letters_bp)
+
+firebase_admin.initialize_app()
+
+# @app.after_request
+# def log_details(response: Response) -> Response:
+#     print(response)
+
+#     return response
 
 
 @app.get("/")

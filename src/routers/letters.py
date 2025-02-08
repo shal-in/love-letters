@@ -1,4 +1,4 @@
-import datetime
+import datetime as dt
 import json
 
 import firebase_admin  # type: ignore[import-untyped]
@@ -9,8 +9,6 @@ from google.cloud.firestore import (  # type: ignore[import-untyped]
 )
 
 from src.letter import get_latest_letter
-
-firebase_admin.initialize_app()
 
 letters_bp = Blueprint("letters", __name__, url_prefix="/letters")
 
@@ -24,7 +22,7 @@ def create_letter() -> tuple[Response, int]:
     latest_letter = get_latest_letter(fs_client)
     new_id = str(int(latest_letter.id) + 1)
 
-    now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    now = dt.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     new_letter_doc: DocumentReference = fs_client.collection("letters").document(new_id)
 
@@ -38,8 +36,3 @@ def create_letter() -> tuple[Response, int]:
     )
 
     return jsonify(dict(id=new_id, created_at=now)), 201
-
-
-# @app.route("/api/ping-text-share")
-# def ping_text_share() -> None:
-#     pass
