@@ -9,6 +9,9 @@ const copyButtonEl = letterHeader.querySelector(".copy");
 copyButtonEl.addEventListener("click", () => {
     const to = document.querySelector(".letter .recipients .to").textContent;
     copyButtonFunction(letterId, to);
+
+    // TODO: ping a GET to `shares/<letter_id>` to create a share_log in the database
+
 })
 
 function copyButtonFunction(letterId, to) {

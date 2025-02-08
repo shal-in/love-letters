@@ -1,5 +1,4 @@
 import random
-import typing as t
 from dataclasses import dataclass
 
 from firebase_admin import firestore  # type: ignore[import-untyped]
@@ -27,7 +26,6 @@ class FsLetter:
 
 def get_latest_letter(fs_client: FirestoreClient) -> DocumentSnapshot:
     query = fs_client.collection("letters").order_by("created_at", direction=Query.DESCENDING).limit(1)
-
     return next(iter(query.stream()))
 
 
@@ -45,7 +43,6 @@ def get_random_letter_id() -> str:
 def letter_exists(id: str) -> bool:
     fs_client = firestore.client()
     letter: DocumentSnapshot = fs_client.collection("letters").document(id).get()
-
     return letter.exists
 
 

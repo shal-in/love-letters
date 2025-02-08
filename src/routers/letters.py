@@ -1,8 +1,7 @@
 import datetime as dt
 import json
 
-import firebase_admin  # type: ignore[import-untyped]
-from firebase_admin import firestore
+from firebase_admin import firestore  # type: ignore[import-untyped]
 from flask import Blueprint, Response, jsonify, request
 from google.cloud.firestore import (  # type: ignore[import-untyped]
     DocumentReference,
@@ -15,6 +14,9 @@ letters_bp = Blueprint("letters", __name__, url_prefix="/letters")
 
 @letters_bp.post("/")
 def create_letter() -> tuple[Response, int]:
+    forwarded_header = request.headers.get("X-Forwarded-For")
+    print(forwarded_header)
+
     raw_data = request.data
 
     fs_client = firestore.client()

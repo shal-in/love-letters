@@ -15,4 +15,4 @@ test:
 
 .PHONY: local
 local:
-	python -m src.main
+	python -m src.app
