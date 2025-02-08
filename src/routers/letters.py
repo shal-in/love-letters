@@ -14,9 +14,7 @@ letters_bp = Blueprint("letters", __name__, url_prefix="/letters")
 
 @letters_bp.post("/")
 def create_letter() -> tuple[Response, int]:
-    forwarded_header = request.headers.get("X-Forwarded-For")
-    print(forwarded_header)
-
+    forwarded_ip = request.headers.get("X-Forwarded-For", None)
     raw_data = request.data
 
     fs_client = firestore.client()
@@ -33,7 +31,7 @@ def create_letter() -> tuple[Response, int]:
             created_at=now,
             raw=json.loads(raw_data.decode("utf-8")),
             id=new_id,
-            ip=request.remote_addr if request.remote_addr else "",
+            ip=forwarded_ip if forwarded_ip else request.remote_addr,
         )
     )
 
