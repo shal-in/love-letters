@@ -3,7 +3,7 @@ import typing as t
 from dataclasses import dataclass
 
 from firebase_admin import firestore  # type: ignore[import-untyped]
-from google.cloud.firestore import (
+from google.cloud.firestore import (  # type: ignore[import-untyped]
     Client as FirestoreClient,
 )
 from google.cloud.firestore import (  # type: ignore[import-untyped]
