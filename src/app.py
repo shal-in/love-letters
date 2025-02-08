@@ -6,6 +6,7 @@ from flask import Flask, Request, redirect, render_template, request
 from google.cloud.firestore import DocumentReference  # type: ignore[import-untyped]
 
 from src.letter import get_letter_data, get_random_letter_id, letter_exists, text_to_html
+from src.routers.dev import dev_bp
 from src.routers.letters import letters_bp
 from src.routers.shares import shares_bp
 from src.utils import dt_now, get_request_ip, new_uid
@@ -13,6 +14,7 @@ from src.utils import dt_now, get_request_ip, new_uid
 app = Flask(__name__)
 app.register_blueprint(letters_bp)
 app.register_blueprint(shares_bp)
+app.register_blueprint(dev_bp)
 
 firebase_admin.initialize_app()
 
