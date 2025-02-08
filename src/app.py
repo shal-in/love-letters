@@ -5,11 +5,12 @@ from firebase_admin import firestore  # type: ignore[import-untyped]
 from flask import Flask, Request, redirect, render_template, request
 from google.cloud.firestore import DocumentReference  # type: ignore[import-untyped]
 
+from src.ip import get_ip_country_code, get_request_ip
 from src.letter import get_letter_data, get_random_letter_id, letter_exists, text_to_html
 from src.routers.dev import dev_bp
 from src.routers.letters import letters_bp
 from src.routers.shares import shares_bp
-from src.utils import dt_now, get_request_ip, new_uid
+from src.utils import dt_now, new_uid
 
 app = Flask(__name__)
 app.register_blueprint(letters_bp)
@@ -24,11 +25,12 @@ def _create_view_log(page: str, request: Request) -> None:
 
     now = dt_now()
     ip = get_request_ip(request)
+    country_code = get_ip_country_code(ip)
 
     view_log_id = new_uid("view_log")
 
     log_ref: DocumentReference = db.collection("view_logs").document(view_log_id)
-    log_ref.set(dict(page=page, created_at=now, ip=ip))
+    log_ref.set(dict(page=page, created_at=now, ip=ip, country_code=country_code))
 
 
 @app.get("/")
