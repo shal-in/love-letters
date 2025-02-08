@@ -1,5 +1,5 @@
 from firebase_admin import firestore  # type: ignore[import-untyped]
-from flask import Blueprint, Response, jsonify, request
+from flask import Blueprint, Response, jsonify
 
 dev_bp = Blueprint("dev", __name__, url_prefix="/dev")
 
