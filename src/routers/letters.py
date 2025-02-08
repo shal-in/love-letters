@@ -6,7 +6,7 @@ from google.cloud.firestore import (  # type: ignore[import-untyped]
     DocumentReference,
 )
 
-from src.ip import get_ip_country_code, get_request_ip
+from src.ip import get_request_ip
 from src.letter import get_latest_letter
 from src.utils import dt_now
 
@@ -17,7 +17,6 @@ letters_bp = Blueprint("letters", __name__, url_prefix="/letters")
 def create_letter() -> tuple[Response, int]:
     now = dt_now()
     ip = get_request_ip(request)
-    country_code = get_ip_country_code(ip)
     raw_data = request.data
 
     db = firestore.client()
@@ -32,7 +31,6 @@ def create_letter() -> tuple[Response, int]:
             created_at=now,
             raw=json.loads(raw_data.decode("utf-8")),
             ip=ip,
-            country_code=country_code,
         )
     )
 
