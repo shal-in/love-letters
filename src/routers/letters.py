@@ -1,4 +1,5 @@
 import json
+import time
 
 from firebase_admin import firestore  # type: ignore[import-untyped]
 from flask import Blueprint, Response, jsonify, request
@@ -35,3 +36,14 @@ def create_letter() -> tuple[Response, int]:
     )
 
     return jsonify(dict(id=new_id, created_at=now)), 201
+
+
+@letters_bp.post("/test")
+def test_create_letter() -> tuple[Response, int]:
+    raw_data = request.data
+
+    print(raw_data)
+
+    time.sleep(3)
+
+    return jsonify(dict(id=3)), 201

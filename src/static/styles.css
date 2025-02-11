@@ -1,115 +1,353 @@
-* {
+*{
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
 }
 
-html {
-    font-size: 16px;
-    background-color: #F4EFC1;
+html{
+    font-size: 14px;
+    background-color: #FFF8D6;
 }
 
-@media screen and (max-width: 450px) {
-    html {
-        font-size: 12px;
-    }
-}
-
-body {
-    max-width: 1100px;
-    margin: auto;
-    min-height: 100vh;
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-/* Header */
-.header-wrapper {
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    background-color: #F4EFC1;
-}
-
-.header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    max-width: 1000px;
-    font-size: 1.25rem;
-    padding: 10px 20px;
-    margin: auto;
-    font-size: 1.25rem;
-}
-
-.header h1 {
-    font-size: 1.25rem;
-    font-weight: 600;
-}
-
-.header h1:hover {
-    cursor: pointer;
-}
-
-.header .buttons a {
-    position: relative;
-    color: black;
-    text-decoration: none;
-    outline: none;
-    font-weight: 200;
-    transition: 0.3s color ease;
-}
-
-.header .buttons a::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 0;
-    height: 1px;
-    background-color: black;
-    transition: width 0.3s ease, background-color 0.3s ease;
-}
-
-.header .buttons a:hover::after,
-.header .buttons a:focus::after {
-    width: 100%;
-    background-color: grey;
-}
-
-.header .buttons a:hover,
-.header .buttons a:focus {
-    color: grey;
-}
-
-.header .buttons a:last-of-type {
-    margin-left: 1rem;
-}
-
-/* Footer */
-.footer-wrapper{
-    width: 100%;
-    min-height: 30px;
+body{
+    max-width: 1200px;
+    height: 99vh;
+    padding-inline: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    padding-block: 10px;
+    justify-content: space-between;
+    margin: auto;
+    font-family: "Itim";
 }
 
-.footer-wrapper p:first-of-type{
-    font-weight: 600;
-    font-size: 1.15rem;
-    letter-spacing: 0.0125rem;
-    margin-bottom: 0.5rem;
+@media screen and (max-width: 500px) {
+    body{
+        padding-inline: 0;
+    }
 }
 
-.footer-wrapper p:last-of-type{
+@media screen and (max-width: 400px) {
+    html{
+        font-size: 12px;
+    }
+    
+}
+
+
+
+/* Header */
+.header-container{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-block: 0.75rem;
+    background: transparent;
+}
+
+.header{
+    width: 100%;
+    margin-inline: 10px;
+}
+
+.header h1, .navigation a{
+    font-size: 1.75rem;
+    font-weight: 200;
+    letter-spacing: 1.5px;
+    transition: 0.3s ease color;
+}
+
+.navigation a:hover,
+.navigation a:focus{
+    color: grey;
+}
+
+.navigation{
     font-size: 1rem;
-    letter-spacing: 0.01rem;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
 }
 
-/* Copy to clipboard */
+.navigation a{
+    margin-right: 1.25rem;
+    color: black;
+    text-decoration: none;
+}
+
+.navigation a:last-of-type{
+    margin-right: 0;
+}
+
+@media screen and (max-width: 575px) {
+    .header h1, .navigation a{
+        font-size: 1.25rem;
+    }
+}
+
+
+/* Footer */
+.footer-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.4;
+}
+
+.footer-container p{
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: 0.75px;
+}
+
+.footer-container p:last-of-type{
+    font-weight: 400;
+    font-size: 1rem;
+    margin-top: 0.25rem;
+}
+
+
+/* Sections */
+section {
+    max-width: 500px;
+    overflow: hidden;
+    position: relative;
+    user-select: none;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-container{
+    position: relative;
+    max-width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.image-container img, .image-container video{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    max-width: 500px;
+    height: auto;
+    transition: 0.3s transform ease;
+}
+
+.image-container.hover img, .image-container.hover video{
+    transform: scale(1.03);
+}
+
+.content-wrapper {
+    position: absolute;
+    width: 80%;
+    aspect-ratio: 1 / 1.7;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 2;
+    
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.content-wrapper .top,
+.content-wrapper .main,
+.content-wrapper .bottom{
+    width: 100%;
+
+}
+
+.content-wrapper .top,
+.content-wrapper .bottom{
+    width: 100%;
+    aspect-ratio: 1 / 0.1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.content-wrapper .main{
+    width: 100%;
+    aspect-ratio: 1 / 1.3;
+}
+
+.click {
+    position: absolute;
+    width: 100%;
+    max-width: 500px;
+    aspect-ratio: 1;
+    z-index: 100;
+}
+
+.click:hover {
+    cursor: pointer;
+}
+
+.click.hidden{
+    opacity: 0;
+    visibility: hidden;
+}
+
+.click .text {
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 16%;
+    font-size: 2.75rem;
+    letter-spacing: 0.03rem;
+    width: 100%;
+    text-align: center;
+
+    transition: 0.75s opacity ease;
+}
+
+
+.click .open {
+    opacity: 0;
+    display: flex;
+    visibility: hidden;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    bottom: -5%;
+    left: 5px;
+
+    transition: 0.75s opacity ease;
+}
+
+.click .open.active{
+    opacity: 1;
+    visibility: visible;
+}
+
+.click .open p {
+    font-size: 2rem;
+    letter-spacing: 1.5px;
+    color: black;
+    margin: 0;
+    font-family: "Itim";
+}
+
+.click .open svg {
+    margin-bottom: 3rem;
+    height: 3rem;
+    width: auto;
+}
+
+
+/* Index */
+
+
+/* Letter */
+#letter .top{
+    max-width: 100%;
+
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    font-size: 1.5rem;
+    letter-spacing: 1.5px;
+    visibility: hidden;
+}
+
+#letter .top.fade-in{
+    visibility: visible;
+}
+
+#letter .top .right{
+    display: flex;
+    align-items: center;
+}
+
+#letter .top button{
+    margin-left: 1rem;
+    border: none;
+    background: transparent;
+    transition: 0.3s transform ease;
+}
+
+#letter .top button svg{
+    height: 2rem;
+    width: auto;
+}
+
+#letter .top .copy:hover,
+#letter .top .copy:focus{
+    transform: translate(3px, -3px);
+    cursor: pointer;
+}
+
+#letter .top .next:hover,
+#letter .top .next:focus{
+    transform: translate(5px);
+    cursor: pointer;
+}
+
+#letter .main {
+    position: relative;
+    max-width: 100%;
+    aspect-ratio: 1 / 1.4;
+    font-size: 1.15rem;
+    letter-spacing: 1px;
+    overflow-y: scroll;
+    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+
+    visibility: hidden
+}
+
+#letter .main.fade-in{
+    visibility: visible;
+}
+
+#letter .main::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, and Edge */
+}
+
+#letter .main .arrow{
+    position: sticky;
+    right: 0;
+    margin-left: auto;
+    z-index: 10;
+    width: 2rem;
+    height: 2rem;
+    opacity: 0.5;
+
+    animation: bounce 2s infinite ease-in-out;
+}
+
+#letter .main .arrow.arrow-down {
+    bottom: 0;
+}
+
+#letter .recipients{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-bottom: 1rem;
+}
+
+#letter .letter p{
+    line-height: 1.33rem;
+    margin-bottom: 1rem;
+}
+
+#letter .letter p:last-of-type{
+    margin-bottom: 0;
+}
+
 #copy-notification {
     position: fixed;
     z-index: 1000;
@@ -120,7 +358,9 @@ body {
     color: white;
     padding: 5px 10px;
     border-radius: 5px;
-    font-size: 0.8rem;
+    font-size: 1.25rem;
+    font-family: "Itim";
+    letter-spacing: 4px;
     opacity: 0;
     transition: opacity 0.3s ease-in-out;
 }
@@ -130,207 +370,87 @@ body {
     visibility: visible;
 }
 
-.hidden {
-    opacity: 0;
-    visibility: hidden;
-}
-
-
-/* Letter */
-.letter-container, .write, .landing, .coming-soon {
-    max-width: 500px;
-    margin: auto;
-    min-height: 82vh;
-    margin-top: 20px;
-    padding-inline: 20px;
-
-    /* border: 4px solid red; */
-}
-
-.letter-header{
-    display: flex;
-    justify-content: space-between;
-    align-items: start;
-}
-
-.letter-header button{
-    background-color: #F4EFC1;
-    outline: none;
-    border: none;
-    transition: transform 0.3s ease;
-}
-
-.letter-header button:hover,
-.letter-header button:focus{
-    transform: translate(3px, -3px);
-    cursor: pointer;;
-}
-
-.letter-container p{
-    margin-bottom: 1rem;
-}
 
 /* Write */
-.write{
-    display: flex;
-    flex-direction: column;
-}
-
-.write .input-container{
-    width: 100%;
+#write .recipients{
     display: grid;
     grid-template-columns: 1fr 1fr;
 }
 
-.write input, .write textarea{
-    background-color: #F4EFC1;
-    outline: none;
-    border: 3px solid black;
-    padding: 10px;
-    letter-spacing: 0.1rem;
-    font-family: Arial, Helvetica, sans-serif;
-    line-height: 1.75rem;
-    font-size: 1rem;
-}
-
-.write .to{
-    border-right: none;
-}
-
-.write textarea{
-    border-top: none;
-    resize: none;
-    min-height: 70vh;
-}
-
-
-
-.write .button-wrapper{
-    display: flex;
-    align-items: center;
-    justify-content: end;
-    margin-top: 0.5rem;
-}
-
-.write .button-wrapper button {
-    background-color: #F4EFC1;
+#write .recipients input,
+#write .letter textarea{
+    background: transparent;
     border: none;
-    outline: none;
+    font-family: "Itim";
     font-size: 1.25rem;
-    font-weight: 400; /* Use numeric value, not "400px" */
-    position: relative; /* For positioning the ::after pseudo-element */
-    transition: color 0.3s ease; /* Smooth color transition */
 }
 
-.write .button-wrapper button::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: -2px; /* Adjust the position of the underline */
-    width: 0;
-    height: 1px;
-    background-color: grey;
-    transition: width 0.3s ease; /* Smooth underline animation */
+#write .recipients input{
+    padding: 5px;
+    border-bottom: 1px solid black;
 }
 
-.write .button-wrapper button:hover::after,
-.write .button-wrapper button:focus::after {
-    width: 100%; /* Expands the underline */
-}
-
-.write .button-wrapper button:hover,
-.write .button-wrapper button:focus {
-    cursor: pointer;
-    color: grey; /* Smooth text color transition */
-}
-
-
-/* Landing */
-.landing {
+#write .letter{
+    height: 100%;
     display: flex;
-    flex-direction: column;
-}
-
-.landing button {
-    text-align: center;
-    font-size: 1.75rem;
-    letter-spacing: 1.5px;
-    background-color: #F4EFC1;
-    outline: none;
-    padding: 4px;
-    font-weight: 600;
-    max-width: 80%;
-    margin-inline: auto;
-    position: relative; /* For positioning the ::after pseudo-element */
-    transition: color 0.3s ease; /* Smooth color transition */
-    border: none;
-}
-
-.landing button.read-button{
-    margin-top: 30%;
-    margin-bottom: 1rem;
-}
-
-.landing button.write-button{
-    margin-top: auto;
-    margin-bottom: 5vh;
-    color: grey;
-}
-
-
-.landing button::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: 3px; /* Adjust the position of the underline */
-    width: 0;
-    height: 1px;
-    background-color: grey;
-    transition: width 0.3s ease; /* Smooth underline animation */
-}
-
-.landing button.write-button::after {
-    background-color: black;
-}
-
-.landing button:hover::after,
-.landing button:focus::after {
-    width: 100%; /* Expands the underline */
-}
-
-.landing button:hover,
-.landing button:focus {
-    cursor: pointer;
-    color: grey; /* Smooth text color transition */
-}
-
-.landing button.write-button:hover,
-.landing button.write-button:focus{
-    color: black;
-}
-
-.landing .gif-container{
-    max-width: 100%;
-    height: auto;
-}
-
-.landing .gif-container img{
-    max-width: 100%;
-    height: auto;
-}
-
-/* Coming soon */
-.coming-soon {
-    display: flex;
-    flex-direction: column;
     justify-content: center;
-    align-items: center;
 }
 
-.coming-soon p{
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 2rem;
-    font-weight: 600;
-    margin-bottom: 2rem;
-    letter-spacing: 0.05rem;
+#write .letter textarea{
+    width: 100%;
+    resize: none;
+    padding: 5px;
+}
+
+#write .bottom{
+    opacity: 1;
+    visibility: visible;
+    width: 100%;
+    display: flex;
+    align-items: start;
+    justify-content: end;
+}
+
+#write .bottom button{
+    background: transparent;
+    border: none;
+    font-family: "Itim";
+    font-size: 1.5rem;
+    transition: 0.3s ease color;
+}
+
+#write .bottom button:hover, 
+#write .bottom button:focus{
+    cursor: pointer;
+    color: grey;
+} 
+
+
+
+
+
+
+
+
+.fade-in {
+    opacity: 0;
+    animation: fadeInAnimation 0.5s ease-in forwards;
+}
+
+@keyframes fadeInAnimation {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-4px);
+    }
 }

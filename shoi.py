@@ -5,6 +5,7 @@ This is a test file that'll send some requests to make sure they work!
 """
 
 import json
+
 import requests
 
 response = requests.request(

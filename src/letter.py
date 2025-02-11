@@ -89,3 +89,33 @@ def text_to_html(raw_data: RawData) -> str:
         html += p
 
     return html
+
+
+def text_to_html(raw_data: RawData) -> str:
+    to = raw_data.to
+    from_ = raw_data.from_
+    text = raw_data.text
+
+    if not to:
+        to = "Anonymous"
+
+    html = f'<div class="recipients">\n<p class="to">To: <span>{to}</span></p>'
+
+    html += f'<p class="from">'
+    if from_:
+        html += f"From: <span>{from_}</span>"
+    html += f"</p>\n</div>"
+
+    html += f'<div class="letter">\n'
+
+    parags: list = text.split("\n")
+
+    for parag in parags:
+        p = f"<p>{parag}</p>"
+
+        html += "\n"
+        html += p
+
+    html += f"\n</div>"
+
+    return html
