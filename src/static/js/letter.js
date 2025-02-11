@@ -12,12 +12,13 @@ function playAnimation() {
 
     setTimeout(() => {
         showLetter();
-    }, 2400);
+    }, 2500);
 
     sessionStorage.setItem("source", "next");
 }
 
 function showLetter() {
+    imgEl.src = "";
     imgEl.src = "../static/assets/last-frame.png";
     clickEl.classList.add("hidden");
     

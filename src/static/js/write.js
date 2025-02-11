@@ -16,7 +16,7 @@ sendButtonEl.addEventListener("click", () => {
         "text": letterInputEl.value
     }
 
-    let url = "/letters"
+    let url = "https://iwroteyoualoveletter.com/letters"
     fetch(url, {
         method: "POST",
         headers: {
@@ -26,8 +26,6 @@ sendButtonEl.addEventListener("click", () => {
     })
     .then(response => response.json())
     .then(data => {
-        // Maybe some kind of fake loading screen?
-
         console.log(data);
 
         sessionStorage.setItem("source", "write");
