@@ -1,22 +1,24 @@
 // Animation stuff
 const contentWrapper = document.querySelector(".content-wrapper");
-const videoEl = document.querySelector("video");
+const imgEl = document.querySelector("img");
 const sessionSource = sessionStorage.getItem("source");
 
 const triggerAnimation = () => playAnimation();
 
 function playAnimation() {
-    videoEl.play();
-    clickEl.classList.add("hidden");
+    imgEl.src = "../static/assets/animation.gif";
+    clickEl.querySelector(".open").classList.remove("active");
+    clickEl.querySelector(".text").style.display = "none";
+
     setTimeout(() => {
         showLetter();
-    }, 2350);
+    }, 2400);
 
     sessionStorage.setItem("source", "next");
 }
 
 function showLetter() {
-    videoEl.currentTime = 2.3;
+    imgEl.src = "../static/assets/last-frame.png";
     clickEl.classList.add("hidden");
     
     ["top", "main", "bottom"].forEach(element => {
@@ -27,10 +29,13 @@ function showLetter() {
 if (sessionSource === "write" || sessionSource === "next") {
     showLetter();
 } else if (sessionSource === "index") {
-    videoEl.currentTime = 0;
     playAnimation();
 } else {
-    videoEl.currentTime = 0;
+    imgEl.src = "../static/assets/first-frame.png";
+
+    setTimeout(() => {
+        clickEl.querySelector(".open").classList.add("active");
+    }, 500)
 
     clickEl.addEventListener("click", triggerAnimation);
     clickEl.addEventListener("keydown", (e) => {

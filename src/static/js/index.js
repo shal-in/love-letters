@@ -3,6 +3,10 @@ clickEl.addEventListener("click", () => {
     clickFunction();
 });
 
+setTimeout(() => {
+    clickEl.querySelector(".open").classList.add("active");
+}, 500)
+
 clickEl.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
         clickFunction();

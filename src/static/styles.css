@@ -50,6 +50,10 @@ body{
     margin-inline: 10px;
 }
 
+.header:hover{
+    cursor: pointer;
+}
+
 .header h1, .navigation a{
     font-size: 1.75rem;
     font-weight: 200;
@@ -153,6 +157,7 @@ section {
     justify-content: space-between;
     align-items: center;
     z-index: 2;
+    user-select: text;
     
     top: 50%;
     left: 50%;
@@ -363,6 +368,7 @@ section {
     letter-spacing: 4px;
     opacity: 0;
     transition: opacity 0.3s ease-in-out;
+    user-select: none;
 }
 
 #copy-notification.show {
@@ -434,7 +440,7 @@ section {
 
 .fade-in {
     opacity: 0;
-    animation: fadeInAnimation 0.5s ease-in forwards;
+    animation: fadeInAnimation 1s ease-in forwards;
 }
 
 @keyframes fadeInAnimation {

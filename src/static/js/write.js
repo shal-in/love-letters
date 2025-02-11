@@ -1,5 +1,3 @@
-console.log("write.js");
-
 const recipientsToInputEl = document.querySelector("input.to");
 const recipientsFromInputEl = document.querySelector("input.from");
 const letterInputEl = document.querySelector(".letter textarea");

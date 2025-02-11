@@ -35,7 +35,7 @@ def get_random_letter_id() -> str:
     latest_letter = get_latest_letter(db)
 
     latest_id = int(latest_letter.id)
-    random_id = random.randrange(1, latest_id)
+    random_id = random.randrange(1, latest_id + 1)
 
     return str(random_id)
 
