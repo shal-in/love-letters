@@ -1,0 +1,7 @@
+line-length = 140
+target-version = "py311"
+lint.extend-select = ["B","I", "Q", "RUF", "C90", "S"]
+lint.mccabe = { max-complexity = 14 }
+extend-exclude = [
+    "[{][{]**[}][}]" # cookiecutter templates
+]

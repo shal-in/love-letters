@@ -1,0 +1,466 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+html{
+    font-size: 14px;
+    background-color: #FFF8D6;
+}
+
+body{
+    max-width: 1200px;
+    height: 99vh;
+    padding-inline: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    margin: auto;
+    font-family: "Itim";
+}
+
+@media screen and (max-width: 500px) {
+    body{
+        padding-inline: 0;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    html{
+        font-size: 12px;
+    }
+    
+}
+
+
+
+/* Header */
+.header-container{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-block: 0.75rem;
+    background: transparent;
+}
+
+.header{
+    width: 100%;
+    margin-inline: 10px;
+}
+
+.header:hover{
+    cursor: pointer;
+}
+
+.header h1, .navigation a{
+    font-size: 1.75rem;
+    font-weight: 200;
+    letter-spacing: 1.5px;
+    transition: 0.3s ease color;
+}
+
+.navigation a:hover,
+.navigation a:focus{
+    color: grey;
+}
+
+.navigation{
+    font-size: 1rem;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.navigation a{
+    margin-right: 1.25rem;
+    color: black;
+    text-decoration: none;
+}
+
+.navigation a:last-of-type{
+    margin-right: 0;
+}
+
+@media screen and (max-width: 575px) {
+    .header h1, .navigation a{
+        font-size: 1.25rem;
+    }
+}
+
+
+/* Footer */
+.footer-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.4;
+}
+
+.footer-container p{
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: 0.75px;
+}
+
+.footer-container p:last-of-type{
+    font-weight: 400;
+    font-size: 1rem;
+    margin-top: 0.25rem;
+}
+
+
+/* Sections */
+section {
+    max-width: 500px;
+    overflow: hidden;
+    position: relative;
+    user-select: none;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-container{
+    position: relative;
+    max-width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.image-container img, .image-container video{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    max-width: 500px;
+    height: auto;
+    transition: 0.3s transform ease;
+}
+
+.image-container.hover img, .image-container.hover video{
+    transform: scale(1.03);
+}
+
+.content-wrapper {
+    position: absolute;
+    width: 80%;
+    aspect-ratio: 1 / 1.7;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 2;
+    user-select: text;
+    
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.content-wrapper .top,
+.content-wrapper .main,
+.content-wrapper .bottom{
+    width: 100%;
+
+}
+
+.content-wrapper .top,
+.content-wrapper .bottom{
+    width: 100%;
+    aspect-ratio: 1 / 0.1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.content-wrapper .main{
+    width: 100%;
+    aspect-ratio: 1 / 1.3;
+}
+
+.click {
+    position: absolute;
+    width: 100%;
+    max-width: 500px;
+    aspect-ratio: 1;
+    z-index: 100;
+}
+
+.click:hover {
+    cursor: pointer;
+}
+
+.click.hidden{
+    opacity: 0;
+    visibility: hidden;
+}
+
+.click .text {
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 16%;
+    font-size: 2.75rem;
+    letter-spacing: 0.03rem;
+    width: 100%;
+    text-align: center;
+
+    transition: 0.75s opacity ease;
+}
+
+
+.click .open {
+    opacity: 0;
+    display: flex;
+    visibility: hidden;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    bottom: -5%;
+    left: 5px;
+
+    transition: 0.75s opacity ease;
+}
+
+.click .open.active{
+    opacity: 1;
+    visibility: visible;
+}
+
+.click .open p {
+    font-size: 2rem;
+    letter-spacing: 1.5px;
+    color: black;
+    margin: 0;
+    font-family: "Itim";
+}
+
+.click .open svg {
+    margin-bottom: 3rem;
+    height: 3rem;
+    width: auto;
+}
+
+
+/* Index */
+
+
+/* Letter */
+#letter .top{
+    max-width: 100%;
+
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    font-size: 1.5rem;
+    letter-spacing: 1.5px;
+    visibility: hidden;
+}
+
+#letter .top.fade-in{
+    visibility: visible;
+}
+
+#letter .top .right{
+    display: flex;
+    align-items: center;
+}
+
+#letter .top button{
+    margin-left: 1rem;
+    border: none;
+    background: transparent;
+    transition: 0.3s transform ease;
+}
+
+#letter .top button svg{
+    height: 2rem;
+    width: auto;
+}
+
+#letter .top .copy:hover,
+#letter .top .copy:focus{
+    transform: translate(3px, -3px);
+    cursor: pointer;
+}
+
+#letter .top .next:hover,
+#letter .top .next:focus{
+    transform: translate(5px);
+    cursor: pointer;
+}
+
+#letter .main {
+    position: relative;
+    max-width: 100%;
+    aspect-ratio: 1 / 1.4;
+    font-size: 1.15rem;
+    letter-spacing: 1px;
+    overflow-y: scroll;
+    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+
+    visibility: hidden
+}
+
+#letter .main.fade-in{
+    visibility: visible;
+}
+
+#letter .main::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, and Edge */
+}
+
+#letter .main .arrow{
+    position: sticky;
+    right: 0;
+    margin-left: auto;
+    z-index: 10;
+    width: 2rem;
+    height: 2rem;
+    opacity: 0.5;
+
+    animation: bounce 2s infinite ease-in-out;
+}
+
+#letter .main .arrow.arrow-down {
+    bottom: 0;
+}
+
+#letter .recipients{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-bottom: 1rem;
+}
+
+#letter .letter p{
+    line-height: 1.33rem;
+    margin-bottom: 1rem;
+}
+
+#letter .letter p:last-of-type{
+    margin-bottom: 0;
+}
+
+#copy-notification {
+    position: fixed;
+    z-index: 1000;
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 1.25rem;
+    font-family: "Itim";
+    letter-spacing: 4px;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    user-select: none;
+}
+
+#copy-notification.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+
+/* Write */
+#write .recipients{
+    display: flex;
+    max-width: 100%;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#write .recipients input,
+#write .letter textarea{
+    background: transparent;
+    border: none;
+    font-family: "Itim";
+    max-width: 100%;
+}
+
+#write .recipients input{
+    padding: 5px;
+    border-bottom: 1px solid black;
+    width: 50%;
+}
+
+#write .letter{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+#write .letter textarea{
+    width: 100%;
+    height: 90%;
+    resize: none;
+    padding: 5px;
+}
+
+#write .bottom{
+    opacity: 1;
+    visibility: visible;
+    width: 100%;
+    display: flex;
+    align-items: start;
+    justify-content: end;
+}
+
+#write .bottom button{
+    background: transparent;
+    border: none;
+    font-family: "Itim";
+    font-size: 1.5rem;
+    transition: 0.3s ease color;
+}
+
+#write .bottom button:hover, 
+#write .bottom button:focus{
+    cursor: pointer;
+    color: grey;
+} 
+
+
+
+
+
+
+
+
+.fade-in {
+    opacity: 0;
+    animation: fadeInAnimation 1s ease-in forwards;
+}
+
+@keyframes fadeInAnimation {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-4px);
+    }
+}
