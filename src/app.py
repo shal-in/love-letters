@@ -60,7 +60,7 @@ def letter(letter_id: str):
 
     _create_view_log(f"/{letter_id}", request)
 
-    return render_template("letter.html", letter=letter_html, letter_id=letter_id)
+    return render_template("letter.html", letter=letter_html, letter_id=letter_id.zfill(4))
 
 
 @app.get("/coming-soon")

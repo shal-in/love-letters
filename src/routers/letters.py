@@ -24,8 +24,6 @@ def create_letter() -> tuple[Response, int]:
     latest_letter = get_latest_letter(db)
     new_id = str(int(latest_letter.id) + 1)
 
-    new_id = new_id.zfill(4)
-
     new_letter_doc: DocumentReference = db.collection("letters").document(new_id)
 
     new_letter_doc.set(
