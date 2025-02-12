@@ -16,7 +16,7 @@ sendButtonEl.addEventListener("click", () => {
         "text": letterInputEl.value
     }
 
-    let url = "https://iwroteyoualoveletter.com/letters"
+    let url = "/letters/"
     fetch(url, {
         method: "POST",
         headers: {
