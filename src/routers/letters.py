@@ -23,7 +23,6 @@ def create_letter() -> tuple[Response, int]:
 
     latest_letter = get_latest_letter(db)
     new_id = str(int(latest_letter.id) + 1)
-    new_id.zfill(4)
 
     new_letter_doc: DocumentReference = db.collection("letters").document(new_id)
 
@@ -35,4 +34,8 @@ def create_letter() -> tuple[Response, int]:
         )
     )
 
-    return jsonify(dict(id=new_id, created_at=now)), 201
+    return Response(
+        json.dumps(dict(id=new_id)),
+        status=201,
+        mimetype="application/json",
+    )
