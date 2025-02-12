@@ -1,7 +1,7 @@
 import json
 
 from firebase_admin import firestore  # type: ignore[import-untyped]
-from flask import Blueprint, Response, jsonify, request
+from flask import Blueprint, Response, request
 from google.cloud.firestore import (  # type: ignore[import-untyped]
     DocumentReference,
 )
@@ -14,7 +14,7 @@ letters_bp = Blueprint("letters", __name__, url_prefix="/letters")
 
 
 @letters_bp.post("/")
-def create_letter() -> tuple[Response, int]:
+def create_letter() -> Response:
     now = dt_now()
     ip = get_request_ip(request)
     raw_data = request.data
