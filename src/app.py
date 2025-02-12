@@ -3,6 +3,7 @@ import os
 import firebase_admin  # type: ignore[import-untyped]
 from firebase_admin import firestore  # type: ignore[import-untyped]
 from flask import Flask, Request, redirect, render_template, request
+from flask_cors import CORS
 from google.cloud.firestore import DocumentReference  # type: ignore[import-untyped]
 
 from src.ip import get_request_ip
@@ -16,6 +17,8 @@ app = Flask(__name__)
 app.register_blueprint(letters_bp)
 app.register_blueprint(shares_bp)
 app.register_blueprint(dev_bp)
+
+CORS(app, origins=["https://iwroteyoualoveletter.com"])
 
 firebase_admin.initialize_app()
 
