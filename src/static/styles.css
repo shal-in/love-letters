@@ -379,8 +379,10 @@ section {
 
 /* Write */
 #write .recipients{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    max-width: 100%;
+    align-items: center;
+    justify-content: space-between;
 }
 
 #write .recipients input,
@@ -388,12 +390,13 @@ section {
     background: transparent;
     border: none;
     font-family: "Itim";
-    font-size: 1.25rem;
+    max-width: 100%;
 }
 
 #write .recipients input{
     padding: 5px;
     border-bottom: 1px solid black;
+    width: 50%;
 }
 
 #write .letter{
@@ -404,6 +407,7 @@ section {
 
 #write .letter textarea{
     width: 100%;
+    height: 90%;
     resize: none;
     padding: 5px;
 }
