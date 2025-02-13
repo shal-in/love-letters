@@ -66,11 +66,6 @@ def letter(letter_id: str):
     return render_template("letter.html", letter=letter_html, letter_id=letter_id)
 
 
-@app.get("/coming-soon")
-def coming_soon():
-    return render_template("coming-soon.html")
-
-
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8080))
     app.run(debug=True, host="0.0.0.0", port=port)

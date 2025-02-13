@@ -98,12 +98,14 @@ body{
     justify-content: center;
     align-items: center;
     opacity: 0.4;
+    font-family: "Itim";
 }
 
 .footer-container p{
     font-size: 1.25rem;
     font-weight: 600;
     letter-spacing: 0.75px;
+    font-family: "Itim";
 }
 
 .footer-container p:last-of-type{
